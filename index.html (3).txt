@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RANDOM THINGS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #232323;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Textura de fibra de carbono */
+        .carbon-fiber {
+            background: 
+                radial-gradient(circle at 25% 25%, #333 2%, transparent 2%),
+                radial-gradient(circle at 75% 75%, #333 2%, transparent 2%),
+                linear-gradient(45deg, #232323 25%, #2a2a2a 25%, #2a2a2a 50%, #232323 50%, #232323 75%, #2a2a2a 75%);
+            background-size: 4px 4px, 4px 4px, 8px 8px;
+            animation: carbonMove 10s linear infinite;
+        }
+
+        @keyframes carbonMove {
+            0% { background-position: 0 0, 0 0, 0 0; }
+            100% { background-position: 4px 4px, -4px -4px, 8px 8px; }
+        }
+
+        /* Pantalla de introducción */
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #232323, #000);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: all 1s ease-in-out;
+        }
+
+        .intro-screen.hide {
+            transform: translateY(-100%);
+            opacity: 0;
+            filter: blur(10px);
+        }
+
+        .intro-text {
+            color: white;
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 20px rgba(235, 232, 0, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .accept-btn {
+            background: #EBE800;
+            color: #000;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(235, 232, 0, 0.3);
+        }
+
+        .accept-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(235, 232, 0, 0.5);
+        }
+
+        /* Título principal con efecto RGB */
+        .main-title {
+            text-align: center;
+            font-size: 4em;
+            font-weight: bold;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rgb-text {
+            position: relative;
+            display: inline-block;
+        }
+
+        .rgb-text::before,
+        .rgb-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: rgbShift 3s ease-in-out infinite;
+        }
+
+        .rgb-text::before {
+            color: #EBE800;
+            animation-delay: -0.1s;
+            transform: translateX(-2px);
+        }
+
+        .rgb-text::after {
+            color: #000;
+            animation-delay: -0.2s;
+            transform: translateX(2px);
+        }
+
+        @keyframes rgbShift {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
+        }
+
+        /* Panel de login */
+        .login-panel {
+            background: rgba(35, 35, 35, 0.9);
+            backdrop-filter: blur(10px);
+            border: 2px solid #EBE800;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transform: perspective(1000px) rotateX(5deg);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: perspective(1000px) rotateX(5deg) translateY(0px); }
+            50% { transform: perspective(1000px) rotateX(5deg) translateY(-10px); }
+        }
+
+        .login-info {
+            color: #EBE800;
+            font-size: 1.2em;
+            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(235, 232, 0, 0.3);
+        }
+
+        .login-btn {
+            background: linear-gradient(45deg, #EBE800, #fff700);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(235, 232, 0, 0.3);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(235, 232, 0, 0.5);
+        }
+
+        /* Panel de administración */
+        .admin-panel {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #EBE800, #fff700);
+            color: #000;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(235, 232, 0, 0.3);
+        }
+
+        .post-form {
+            background: rgba(35, 35, 35, 0.9);
+            border: 2px solid #EBE800;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #EBE800;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #555;
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: white;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #EBE800;
+            box-shadow: 0 0 10px rgba(235, 232, 0, 0.3);
+            outline: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #EBE800, #fff700);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(235, 232, 0, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(235, 232, 0, 0.5);
+        }
+
+        /* Posts */
+        .posts-container {
+            display: grid;
+            gap: 30px;
+        }
+
+        .post {
+            background: rgba(35, 35, 35, 0.9);
+            border: 2px solid #555;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            transform: perspective(1000px) rotateY(2deg);
+        }
+
+        .post:hover {
+            border-color: #EBE800;
+            transform: perspective(1000px) rotateY(0deg) translateY(-5px);
+            box-shadow: 0 15px 40px rgba(235, 232, 0, 0.2);
+        }
+
+        .post-title {
+            color: #EBE800;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(235, 232, 0, 0.3);
+        }
+
+        .post-content {
+            color: white;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .post-image {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .post-link {
+            color: #EBE800;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .post-link:hover {
+            color: #fff700;
+            text-shadow: 0 0 10px rgba(235, 232, 0, 0.5);
+        }
+
+        .post-date {
+            color: #999;
+            font-size: 0.9em;
+            text-align: right;
+            border-top: 1px solid #555;
+            padding-top: 10px;
+            margin-top: 20px;
+        }
+
+        .delete-btn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #cc0000;
+            transform: scale(1.05);
+        }
+
+        /* Animaciones 3D */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-cube {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #EBE800, transparent);
+            animation: float3D 8s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+
+        .floating-cube:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-cube:nth-child(2) { top: 20%; right: 10%; animation-delay: 2s; }
+        .floating-cube:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 4s; }
+        .floating-cube:nth-child(4) { bottom: 10%; right: 20%; animation-delay: 6s; }
+
+        @keyframes float3D {
+            0%, 100% { 
+                transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translateY(-30px) rotateX(180deg) rotateY(180deg);
+                opacity: 0.8;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5em;
+            }
+            
+            .intro-text {
+                font-size: 1.8em;
+                padding: 0 20px;
+            }
+            
+            .login-panel {
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body class="carbon-fiber">
+    <!-- Elementos flotantes 3D -->
+    <div class="floating-elements">
+        <div class="floating-cube"></div>
+        <div class="floating-cube"></div>
+        <div class="floating-cube"></div>
+        <div class="floating-cube"></div>
+    </div>
+
+    <!-- Pantalla de introducción -->
+    <div class="intro-screen" id="introScreen">
+        <div class="intro-text">
+            ESTAS POR INGRESAR A UN SITIO WEB<br>
+            DONDE SE PUBLICAN COSAS RANDOM
+        </div>
+        <button class="accept-btn" onclick="hideIntro()">ACEPTAR</button>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="main-content" id="mainContent" style="display: none;">
+        <h1 class="main-title">
+            <span class="rgb-text" data-text="RANDOM THINGS">RANDOM THINGS</span>
+        </h1>
+
+        <!-- Panel de login -->
+        <div class="login-panel" id="loginPanel">
+            <div class="login-info">USUARIO: usuario</div>
+            <div class="login-info">CONTRASEÑA: 098765</div>
+            <button class="login-btn" onclick="showLoginForm()">INICIAR SESIÓN ADMINISTRADOR</button>
+        </div>
+
+        <!-- Formulario de login real -->
+        <div class="login-panel" id="loginForm" style="display: none;">
+            <div class="form-group">
+                <label>Usuario:</label>
+                <input type="text" id="username" placeholder="Ingresa tu usuario">
+            </div>
+            <div class="form-group">
+                <label>Contraseña:</label>
+                <input type="password" id="password" placeholder="Ingresa tu contraseña">
+            </div>
+            <button class="login-btn" onclick="login()">INGRESAR</button>
+        </div>
+
+        <!-- Panel de administración -->
+        <div class="admin-panel" id="adminPanel">
+            <div class="admin-header">
+                PANEL DE ADMINISTRACIÓN - RANDOM THINGS
+            </div>
+
+            <!-- Formulario para crear posts -->
+            <div class="post-form">
+                <h3 style="color: #EBE800; margin-bottom: 20px;">CREAR NUEVA PUBLICACIÓN</h3>
+                
+                <div class="form-group">
+                    <label>Tipo de contenido:</label>
+                    <select id="contentType" onchange="toggleContentFields()">
+                        <option value="text">Texto</option>
+                        <option value="image">Imagen</option>
+                        <option value="link">Enlace URL</option>
+                        <option value="mixed">Mixto</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Título:</label>
+                    <input type="text" id="postTitle" placeholder="Título de la publicación">
+                </div>
+
+                <div class="form-group" id="textContent">
+                    <label>Contenido:</label>
+                    <textarea id="postContent" rows="6" placeholder="Escribe el contenido aquí..."></textarea>
+                </div>
+
+                <div class="form-group" id="imageContent" style="display: none;">
+                    <label>URL de la imagen:</label>
+                    <input type="url" id="postImage" placeholder="https://ejemplo.com/imagen.jpg">
+                </div>
+
+                <div class="form-group" id="linkContent" style="display: none;">
+                    <label>URL del enlace:</label>
+                    <input type="url" id="postLink" placeholder="https://ejemplo.com">
+                </div>
+
+                <button class="submit-btn" onclick="createPost()">PUBLICAR</button>
+            </div>
+        </div>
+
+        <!-- Container de posts -->
+        <div class="posts-container" id="postsContainer">
+            <!-- Los posts se cargarán aquí dinámicamente -->
+        </div>
+    </div>
+
+    <script>
+        let posts = [];
+        let isLoggedIn = false;
+
+        function hideIntro() {
+            const introScreen = document.getElementById('introScreen');
+            const mainContent = document.getElementById('mainContent');
+            
+            introScreen.classList.add('hide');
+            
+            setTimeout(() => {
+                introScreen.style.display = 'none';
+                mainContent.style.display = 'block';
+            }, 1000);
+        }
+
+        function showLoginForm() {
+            document.getElementById('loginPanel').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === 'usuario' && password === '098765') {
+                isLoggedIn = true;
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                loadPosts();
+            } else {
+                alert('Credenciales incorrectas');
+            }
+        }
+
+        function toggleContentFields() {
+            const contentType = document.getElementById('contentType').value;
+            const textContent = document.getElementById('textContent');
+            const imageContent = document.getElementById('imageContent');
+            const linkContent = document.getElementById('linkContent');
+
+            // Ocultar todos los campos
+            textContent.style.display = 'none';
+            imageContent.style.display = 'none';
+            linkContent.style.display = 'none';
+
+            // Mostrar campos según el tipo
+            switch(contentType) {
+                case 'text':
+                    textContent.style.display = 'block';
+                    break;
+                case 'image':
+                    imageContent.style.display = 'block';
+                    break;
+                case 'link':
+                    linkContent.style.display = 'block';
+                    break;
+                case 'mixed':
+                    textContent.style.display = 'block';
+                    imageContent.style.display = 'block';
+                    linkContent.style.display = 'block';
+                    break;
+            }
+        }
+
+        function createPost() {
+            if (!isLoggedIn) return;
+
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
+            const image = document.getElementById('postImage').value;
+            const link = document.getElementById('postLink').value;
+            const contentType = document.getElementById('contentType').value;
+
+            if (!title) {
+                alert('Por favor ingresa un título');
+                return;
+            }
+
+            const post = {
+                id: Date.now(),
+                title: title,
+                content: content,
+                image: image,
+                link: link,
+                type: contentType,
+                date: new Date().toLocaleString('es-ES')
+            };
+
+            posts.unshift(post);
+            
+            // Limpiar formulario
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postContent').value = '';
+            document.getElementById('postImage').value = '';
+            document.getElementById('postLink').value = '';
+
+            renderPosts();
+        }
+
+        function deletePost(id) {
+            if (!isLoggedIn) return;
+            
+            posts = posts.filter(post => post.id !== id);
+            renderPosts();
+        }
+
+        function renderPosts() {
+            const container = document.getElementById('postsContainer');
+            
+            if (posts.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #999; padding: 50px;">No hay publicaciones aún</div>';
+                return;
+            }
+
+            container.innerHTML = posts.map(post => `
+                <div class="post">
+                    <div class="post-title">${post.title}</div>
+                    
+                    ${post.content ? `<div class="post-content">${post.content}</div>` : ''}
+                    
+                    ${post.image ? `<img src="${post.image}" alt="Imagen del post" class="post-image" onerror="this.style.display='none'">` : ''}
+                    
+                    ${post.link ? `<div class="post-content"><a href="${post.link}" target="_blank" class="post-link">🔗 ${post.link}</a></div>` : ''}
+                    
+                    <div class="post-date">
+                        ${post.date}
+                        ${isLoggedIn ? `<button class="delete-btn" onclick="deletePost(${post.id})">Eliminar</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadPosts() {
+            // Algunos posts de ejemplo
+            posts = [
+                {
+                    id: 3,
+                    title: "Bienvenidos a Random Things",
+                    content: "Este es un espacio donde compartimos contenido aleatorio, interesante y divertido. ¡Explora y descubre cosas nuevas!",
+                    type: "text",
+                    date: new Date().toLocaleString('es-ES')
+                },
+                {
+                    id: 2,
+                    title: "Ejemplo de enlace",
+                    link: "https://github.com",
+                    content: "Aquí puedes compartir enlaces interesantes",
+                    type: "mixed",
+                    date: new Date().toLocaleString('es-ES')
+                },
+                {
+                    id: 1,
+                    title: "¿Sabías que...?",
+                    content: "Los pulpos tienen tres corazones y sangre azul. Dos de sus corazones bombean sangre a las branquias, mientras que el tercero bombea sangre al resto del cuerpo.",
+                    type: "text",
+                    date: new Date().toLocaleString('es-ES')
+                }
+            ];
+            
+            renderPosts();
+        }
+
+        // Cargar posts iniciales si no está logueado (solo lectura)
+        loadPosts();
+    </script>
+</body>
+</html>
